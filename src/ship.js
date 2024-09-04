@@ -3,7 +3,7 @@ function ship({ length, hitTimes = 0, status = "alive" }) {
   const id = v4();
   function hit() {
     this.hitTimes += 1;
-    this.isSunk();
+   this.isSunk();
   }
   function isSunk() {
     if (this.hitTimes >= this.length) this.status = "dead";

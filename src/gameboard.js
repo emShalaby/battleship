@@ -1,5 +1,6 @@
 function gameBoard(ships, cols = 10, rows = 10) {
   let map = Array.from({ length: rows }, () => Array(cols).fill(""));
+  let status = "alive";
   this.ships.map((ship) => {
     ship.location = [];
     return ship;
@@ -26,6 +27,8 @@ function gameBoard(ships, cols = 10, rows = 10) {
     }
     this.ships.find((ship) => ship.id == this.map[row][col]).hit();
     this.map[row][col] += "hit";
+    if (this.ships.every((ship) => ship.status == "dead")) this.status = "dead";
+
   }
   function updateShip(ship) {
     this.ships.map((element) => {
@@ -33,6 +36,7 @@ function gameBoard(ships, cols = 10, rows = 10) {
     });
   }
 
-  return { map, ships, setLocation, recieveAttack };
+
+  return { map, ships, setLocation, recieveAttack, status };
 }
 module.exports = gameBoard;
