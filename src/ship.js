@@ -1,6 +1,6 @@
-const { uuid } = require("uuidv4");
+const { v4 } = require("uuid");
 function ship({ length, hitTimes = 0, status = "alive" }) {
-  const id = uuid();
+  const id = v4();
   function hit() {
     this.hitTimes += 1;
     this.isSunk();
