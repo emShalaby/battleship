@@ -17,14 +17,15 @@ function gameBoard(ships, cols = 10, rows = 10) {
     return ship;
   }
   function recieveAttack([row, col]) {
-    if (
-      this.ships.find((ship) => {
-        ship.locations.includes([row, col]);
-      })
-    ) {
-      this.ships.find((ship) => ship.locations.includes([row, col])).hit();
-      this.map[row][col] = "hit";
-    } else this.map[row][col] = "missed";
+    if (this.map[row][col] == "" || this.map[row][col] == "missed") {
+      this.map[row][col] = "missed";
+      return false;
+    }
+    if (this.map[row][col].endsWith("hit")) {
+      return false;
+    }
+    this.ships.find((ship) => ship.id == this.map[row][col]).hit();
+    this.map[row][col] += "hit";
   }
   function updateShip(ship) {
     this.ships.map((element) => {
@@ -32,9 +33,6 @@ function gameBoard(ships, cols = 10, rows = 10) {
     });
   }
 
-  function getLocation(ship) {
-    return this.ships.find((element) => {});
-  }
-  return { map, ships, setLocation };
+  return { map, ships, setLocation, recieveAttack };
 }
 module.exports = gameBoard;

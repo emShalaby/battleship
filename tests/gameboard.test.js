@@ -24,12 +24,11 @@ describe("gameBoard", () => {
       ["", "", "", "", "", "", "", "", "", ""],
       ["", "", "", "", "", "", "", "", "", ""],
     ]);
-  });
-  test("ship locations should exist as empty arrays", () => {
     expect(testBoard.ships.map((ship) => ship.location)).toEqual(
       Array(testBoard.ships.length).fill([])
     );
   });
+
   test("set location method should correctly update a ships location and update the map", () => {
     testBoard.setLocation(
       testBoard.ships.find((ship) => ship.id == testShips[0].id),
@@ -39,5 +38,29 @@ describe("gameBoard", () => {
       testBoard.ships.find((ship) => ship.id == testShips[0].id).location
     ).toEqual([[0, 0]]);
     expect(testBoard.map[0][0]).toBe(testShips[0].id);
+  });
+  test("game board should recieve a missed attack correctly and update map", () => {
+    testBoard.recieveAttack([0, 0]);
+    expect(testBoard.map[0][0]).toBe("missed");
+  });
+  test("game board should update correctly when a ship is hit", () => {
+    testBoard.setLocation(
+      testBoard.ships.find((ship) => ship.id == testShips[0].id),
+      [[0, 0]]
+    );
+    expect(testBoard.map[0][0]).toBe(testBoard.ships[0].id);
+    testBoard.recieveAttack([0, 0]);
+
+    expect(testBoard.map[0][0]).toBe(testBoard.ships[0].id + "hit");
+  });
+  test("a ship should increase its hits when a recieved attack lands on a ship", () => {
+    testBoard.setLocation(
+      testBoard.ships.find((ship) => ship.id == testShips[0].id),
+      [[0, 0]]
+    );
+    testBoard.recieveAttack([0, 0]);
+    expect(
+      testBoard.ships.find((ship) => ship.id == testShips[0].id).hitTimes
+    ).toBe(1);
   });
 });
