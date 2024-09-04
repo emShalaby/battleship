@@ -11,6 +11,7 @@ describe("ship", () => {
     expect(testShip.length).toBe(3);
     expect(testShip.hitTimes).toBe(0);
     expect(testShip.status).toBe("alive");
+    expect(testShip.id).not.toBeUndefined();
   });
   test("should increase hit times when hit() is called", () => {
     testShip.hit();
